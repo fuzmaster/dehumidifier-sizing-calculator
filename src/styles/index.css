@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-sand font-sans text-base leading-7 text-ink antialiased;
+    background-image: linear-gradient(180deg, rgba(255, 255, 255, 0.85), rgba(243, 237, 225, 0.95));
+  }
+
+  ::selection {
+    @apply bg-lake/20 text-ink;
+  }
+
+  a {
+    @apply outline-none;
+  }
+}
+
+@layer components {
+  .section-shell {
+    @apply mx-auto max-w-7xl px-6;
+  }
+}

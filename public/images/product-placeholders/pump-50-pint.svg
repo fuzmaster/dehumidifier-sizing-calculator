@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" fill="none">
+  <rect width="800" height="520" rx="36" fill="#E8F6F3"/>
+  <rect x="210" y="50" width="350" height="394" rx="36" fill="#FFFFFF" stroke="#102A43" stroke-opacity="0.16" stroke-width="8"/>
+  <rect x="252" y="98" width="266" height="136" rx="24" fill="#D9F2ED"/>
+  <path d="M575 340c41 0 73-32 73-72" stroke="#5B7C5B" stroke-width="16" stroke-linecap="round"/>
+  <path d="M648 268v-86" stroke="#5B7C5B" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="648" cy="170" r="30" fill="#5B7C5B" fill-opacity="0.16" stroke="#5B7C5B" stroke-width="12"/>
+  <text x="50%" y="470" text-anchor="middle" fill="#102A43" font-size="34" font-family="Arial, sans-serif">Pump-Ready 50-Pint Class</text>
+</svg>
