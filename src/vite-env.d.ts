@@ -12,8 +12,9 @@ interface ImportMeta {
 
 declare global {
   interface Window {
-    plausible?: (eventName: string, options?: { props?: Record<string, string | number | boolean> }) => void;
+    dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    plausible?: (eventName: string, options?: { props?: Record<string, string | number | boolean> }) => void;
   }
 }
 

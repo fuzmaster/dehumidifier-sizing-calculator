@@ -101,6 +101,11 @@ export default function App() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    // Guarantee calculator_started fires even if user never touched a field
+    if (!hasStarted) {
+      setHasStarted(true);
+      trackCalculatorStarted();
+    }
     setSubmittedInputs({ ...inputs });
 
     const result = calculateRecommendation(inputs);
@@ -167,7 +172,9 @@ export default function App() {
 
     trackAffiliateCardClicked({
       productId: product.id,
+      productName: product.name,
       retailer: product.retailer,
+      capacityTier: product.capacityTier,
       resultCapacityTier: submittedRecommendation.capacityTier,
       confidenceLevel: submittedRecommendation.confidenceLevel,
       fallbackStepsUsed: productMatches?.fallbackStepsUsed.join(' | '),
@@ -185,7 +192,9 @@ export default function App() {
     handleAffiliateCardClick(product, productPosition, productRankLabel);
     trackAffiliateCtaClicked({
       productId: product.id,
+      productName: product.name,
       retailer: product.retailer,
+      capacityTier: product.capacityTier,
       resultCapacityTier: submittedRecommendation.capacityTier,
       confidenceLevel: submittedRecommendation.confidenceLevel,
       fallbackStepsUsed: productMatches?.fallbackStepsUsed.join(' | '),

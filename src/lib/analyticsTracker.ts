@@ -1,61 +1,73 @@
-import type { AnalyticsEvent } from '../types/calculator';
-
 type AnalyticsProvider = 'console' | 'plausible' | 'ga4' | 'none';
 
-interface AnalyticsConfig {
-  provider: AnalyticsProvider;
-  domain?: string;
-  measurementId?: string;
-  debug?: boolean;
+function getProvider(): AnalyticsProvider {
+  const configured = import.meta.env.VITE_ANALYTICS_PROVIDER as AnalyticsProvider | undefined;
+  return configured ?? (import.meta.env.DEV ? 'console' : 'none');
 }
 
-function getAnalyticsConfig(): AnalyticsConfig {
-  const configuredProvider = import.meta.env.VITE_ANALYTICS_PROVIDER;
-  const provider = configuredProvider ?? (import.meta.env.DEV ? 'console' : 'none');
+/**
+ * Call once at app startup (main.tsx). Injects the GA4 script tag and
+ * defines window.gtag when VITE_ANALYTICS_PROVIDER=ga4 and VITE_GA4_ID is set.
+ * No-ops for every other provider.
+ */
+export function initAnalytics(): void {
+  const provider = getProvider();
+  if (provider !== 'ga4') return;
 
-  return {
-    provider,
-    domain: import.meta.env.VITE_PLAUSIBLE_DOMAIN,
-    measurementId: import.meta.env.VITE_GA4_ID,
-    debug: import.meta.env.DEV,
+  const measurementId = import.meta.env.VITE_GA4_ID;
+  if (!measurementId) {
+    if (import.meta.env.DEV) {
+      console.warn('[analytics] VITE_GA4_ID is not set — GA4 will not load');
+    }
+    return;
+  }
+
+  // Define dataLayer + gtag shim synchronously so queued calls survive async load
+  window.dataLayer = window.dataLayer ?? [];
+  window.gtag = function (...args: unknown[]) {
+    window.dataLayer!.push(args);
   };
+  window.gtag('js', new Date());
+  window.gtag('config', measurementId);
+
+  // Inject the loader script
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`;
+  document.head.appendChild(script);
 }
 
-function normalizePayload(payload?: AnalyticsEvent['payload']): Record<string, string | number | boolean> {
-  return Object.fromEntries(Object.entries(payload ?? {}).filter((entry): entry is [string, string | number | boolean] => entry[1] !== undefined));
-}
+/**
+ * Fire a single analytics event through whichever provider is active.
+ * Safe to call before initAnalytics has finished — GA4 queues via dataLayer.
+ */
+export function trackEvent(
+  eventName: string,
+  params: Record<string, string | number | boolean | undefined> = {},
+): void {
+  const provider = getProvider();
+  const cleanParams: Record<string, string | number | boolean> = Object.fromEntries(
+    Object.entries(params).filter((entry): entry is [string, string | number | boolean] => entry[1] !== undefined),
+  );
 
-export function trackAnalyticsEvent(event: AnalyticsEvent): void {
-  const config = getAnalyticsConfig();
-  const payload = normalizePayload(event.payload);
+  if (import.meta.env.DEV) {
+    console.info('[analytics event]', eventName, cleanParams);
+  }
 
-  switch (config.provider) {
-    case 'console':
-      console.info('[analytics]', event.name, payload);
+  switch (provider) {
+    case 'ga4':
+      window.gtag?.('event', eventName, cleanParams);
       return;
     case 'plausible':
-      if (config.domain) {
-        window.plausible?.(event.name, { props: payload });
-        if (config.debug) {
-          console.info('[plausible]', event.name, payload);
-        }
-      } else if (config.debug) {
-        console.warn('[plausible] missing VITE_PLAUSIBLE_DOMAIN');
-      }
+      window.plausible?.(eventName, { props: cleanParams });
       return;
-    case 'ga4':
-      if (config.measurementId) {
-        window.gtag?.('event', event.name, payload);
-      } else if (config.debug) {
-        console.warn('[ga4] measurementId missing for event', event.name);
-      }
-      if (config.debug) {
-        console.info('[ga4]', event.name, payload);
+    case 'console':
+      // already logged above in DEV; also log in prod console mode
+      if (!import.meta.env.DEV) {
+        console.info('[analytics]', eventName, cleanParams);
       }
       return;
     case 'none':
-      if (config.debug) {
-        console.info('[analytics:none]', event.name, payload);
-      }
+      return;
   }
 }
