@@ -26,14 +26,26 @@ export function ResultPanel({ result, title, eyebrow, preview = false }: ResultP
           <h2 className="font-display text-2xl leading-tight md:text-3xl">{title}</h2>
           <span className={`rounded-full px-3 py-1.5 text-xs font-semibold ${badgeClassName}`}>{result.confidenceLabel}</span>
         </div>
-        <div className="mt-4 grid gap-3 rounded-2xl bg-mist p-4 text-base leading-7 text-ink/85 md:grid-cols-3 md:items-center">
-          <p>
-            <span className="font-semibold text-ink">Recommended tier:</span> {result.capacityLabel}
-          </p>
-          <p>
-            <span className="font-semibold text-ink">Confidence:</span> {result.confidenceLabel}
-          </p>
-          <p className="md:text-right">{result.plainEnglishExplanation}</p>
+        <div className="mt-5 grid gap-4 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="rounded-3xl bg-mist p-5 md:p-6">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Your current match</p>
+            <p className="mt-2 text-2xl font-semibold leading-tight text-ink md:text-3xl">{result.capacityLabel}</p>
+            <p className="mt-3 text-base leading-7 text-ink/85 md:text-lg">{result.plainEnglishExplanation}</p>
+            {result.reasoningSteps[0] ? (
+              <p className="mt-4 text-[15px] leading-6 text-ink/75">
+                <span className="font-semibold text-ink">Why:</span> {result.reasoningSteps[0]}
+              </p>
+            ) : null}
+          </div>
+          <div className="rounded-3xl border border-ink/10 p-5 md:p-6">
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">What happens after submit</p>
+            <ul className="mt-4 space-y-3 text-[15px] leading-6 text-ink/80 md:text-base md:leading-7">
+              <li>See the exact reason this class matched your basement.</li>
+              <li>Get a drainage note for pump versus gravity setup.</li>
+              <li>Compare 3 ranked product options when the scenario is in normal range.</li>
+            </ul>
+            <p className="mt-4 font-semibold text-ink">Next: submit to unlock the full comparison path.</p>
+          </div>
         </div>
       </section>
     );

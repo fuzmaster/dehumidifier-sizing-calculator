@@ -22,7 +22,7 @@ const initialInputs: CalculatorInputs = {
   humiditySeverity: 'damp',
   basementTemperature: '65_75',
   drainagePreference: 'gravity_drain',
-  confusionMode: 'first_unit',
+  confusionMode: 'replace_old_70',
   budgetRange: 'mid',
 };
 
@@ -43,10 +43,24 @@ export default function App() {
   const submittedResultRef = useRef<HTMLElement | null>(null);
 
   const previewRecommendation = calculateRecommendation(inputs);
+  const exampleRecommendation = calculateRecommendation(initialInputs);
   const submittedRecommendation = submittedInputs ? calculateRecommendation(submittedInputs) : null;
   const submittedCapacityTier =
     submittedRecommendation && isCapacityTier(submittedRecommendation.capacityTier)
       ? submittedRecommendation.capacityTier
+      : null;
+  const exampleCapacityTier =
+    exampleRecommendation.status === 'ok' && isCapacityTier(exampleRecommendation.capacityTier)
+      ? exampleRecommendation.capacityTier
+      : null;
+  const exampleProducts =
+    exampleRecommendation.status === 'ok' && exampleCapacityTier
+      ? filterProducts({
+          capacityTier: exampleCapacityTier,
+          drainagePreference: initialInputs.drainagePreference,
+          basementTemperature: initialInputs.basementTemperature,
+          budgetRange: initialInputs.budgetRange,
+        })
       : null;
   const productMatches =
     submittedInputs && submittedRecommendation?.status === 'ok' && submittedCapacityTier
@@ -219,18 +233,60 @@ export default function App() {
               </span>
             </div>
             <CalculatorForm inputs={inputs} onChange={updateField} onSubmit={handleSubmit} />
+            <div className="mt-6 rounded-3xl border border-ink/10 bg-mist p-5">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">What you&apos;ll get</p>
+              <ul className="mt-3 space-y-2 text-[15px] leading-7 text-ink/80 md:text-base">
+                <li>Your recommended modern DOE class to compare first</li>
+                <li>Plain-English reasoning for the size match</li>
+                <li>A drainage note for pump vs gravity setup</li>
+                <li>Three ranked product comparisons when the scenario is in normal sizing range</li>
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
       {!submittedRecommendation ? (
         <section className="mx-auto max-w-7xl px-6 pb-12 md:pb-16">
-          <ResultPanel
-            eyebrow="Live preview"
-            title="Live preview"
-            result={previewRecommendation}
-            preview
-          />
+          <div className="space-y-8">
+            <ResultPanel
+              eyebrow="Live preview"
+              title="Live preview"
+              result={previewRecommendation}
+              preview
+            />
+
+            {exampleProducts ? (
+              <div className="space-y-6 rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
+                <div className="flex flex-wrap items-end justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.24em] text-moss">Example comparison</p>
+                    <h2 className="mt-2 font-display text-3xl md:text-4xl">Typical old 70-pint replacement path</h2>
+                    <p className="mt-3 max-w-3xl text-base leading-7 text-ink/75 md:text-lg">
+                      This example uses a 1,200 sq ft damp basement with normal temperatures and gravity drainage.
+                      Use the calculator above for your exact match.
+                    </p>
+                  </div>
+                  <span className="rounded-full bg-sand px-4 py-2 text-sm font-semibold text-ink">
+                    {exampleRecommendation.capacityLabel}
+                  </span>
+                </div>
+                <AffiliateDisclosure />
+                <div className="grid gap-6 lg:grid-cols-3">
+                  {exampleProducts.products.map((product, index) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      capacityTier={exampleRecommendation.capacityLabel}
+                      productPosition={index + 1}
+                      rankLabel={getProductRankLabel(product, index + 1)}
+                      onCtaClick={() => undefined}
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
         </section>
       ) : null}
 
