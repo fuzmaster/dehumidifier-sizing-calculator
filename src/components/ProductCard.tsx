@@ -20,6 +20,11 @@ function getRetailerCta(retailer: string): string {
   return 'Check current retailer listing';
 }
 
+function formatLastReviewed(dateStr: string): string {
+  const [year, month] = dateStr.split('-').map(Number);
+  return new Date(year, month - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+}
+
 function getVerificationLabel(verificationStatus: ProductRecord['verificationStatus']): string {
   switch (verificationStatus) {
     case 'exact_model':
@@ -33,7 +38,7 @@ function getVerificationLabel(verificationStatus: ProductRecord['verificationSta
 
 export function ProductCard({ product, capacityTier, productPosition, rankLabel, onCtaClick }: ProductCardProps) {
   const hasSpecificModel = typeof product.modelNumber === 'string' && product.modelNumber.trim().length > 0;
-  const trustLine = `Manually reviewed ${product.lastReviewed} · Retailer price may change`;
+  const trustLine = `Last checked: ${formatLastReviewed(product.lastReviewed)} · Retailer price may change`;
   const isPrimaryCard = productPosition === 1;
   const visibleBadges = product.badges.slice(0, 2);
 
@@ -42,9 +47,7 @@ export function ProductCard({ product, capacityTier, productPosition, rankLabel,
       isPrimaryCard ? 'border-lake/40 ring-1 ring-lake/20 lg:-translate-y-1' : 'border-ink/10'
     }`}>
       <div className={`h-2 w-full ${isPrimaryCard ? 'bg-lake' : 'bg-mist'}`} aria-hidden="true" />
-      <div className="block overflow-hidden bg-mist">
-        <img src={product.imagePath} alt={product.name} className="h-52 w-full object-cover" />
-      </div>
+
       <div className="flex flex-1 flex-col p-6">
         <div className="flex flex-wrap items-center gap-2">
           <span className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${isPrimaryCard ? 'bg-lake text-white' : 'bg-ink text-white'}`}>

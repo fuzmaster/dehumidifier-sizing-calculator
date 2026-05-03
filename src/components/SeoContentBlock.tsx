@@ -175,15 +175,15 @@ export function SeoContentBlock() {
             </p>
           </details>
           <details className="rounded-2xl border border-ink/10 px-5 py-4">
-            <summary className="cursor-pointer text-lg font-semibold text-ink">When should I prefer a pump model?</summary>
+            <summary className="cursor-pointer text-lg font-semibold text-ink">What if I cannot find the original pint rating on my old unit?</summary>
             <p className="mt-3 text-[15px] leading-7 text-ink/75 md:text-base">
-              Use pump models when gravity drainage is not practical and condensate must travel upward or farther away.
+              Check the unit label or owner&apos;s manual for the original capacity. If the rating is not visible, measure the space and use the calculator with your actual basement conditions to reach the right shopping class.
             </p>
           </details>
           <details className="rounded-2xl border border-ink/10 px-5 py-4">
-            <summary className="cursor-pointer text-lg font-semibold text-ink">What if my basement is under 60°F?</summary>
+            <summary className="cursor-pointer text-lg font-semibold text-ink">Can I use this calculator for a crawlspace or above-grade room?</summary>
             <p className="mt-3 text-[15px] leading-7 text-ink/75 md:text-base">
-              Favor products that explicitly mention low-temperature suitability and defrost behavior for cool basements.
+              The calculator is designed around basement conditions and the old 70-pint replacement scenario. Crawlspaces and above-grade rooms have different ventilation and moisture patterns, so treat the result as a starting point rather than a direct recommendation.
             </p>
           </details>
         </div>

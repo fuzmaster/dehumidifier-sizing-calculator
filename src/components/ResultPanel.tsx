@@ -105,24 +105,23 @@ export function ResultPanel({ result, title, eyebrow, preview = false }: ResultP
   return (
     <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
       <p className="text-xs font-semibold uppercase tracking-[0.24em] text-moss">{eyebrow}</p>
-      <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h2 className="font-display text-3xl leading-tight md:text-4xl">{title}</h2>
-          <p className="mt-3 max-w-2xl text-base leading-7 text-ink/70">{result.affiliateMessage.subheadline}</p>
-        </div>
-        <div className="flex flex-col items-start gap-2 sm:items-end">
-          <span className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">Confidence</span>
-          <span className={`rounded-full px-4 py-2 text-sm font-semibold ${badgeClassName}`}>{result.confidenceLabel}</span>
-          <span className="rounded-full bg-sand px-4 py-2 text-sm font-semibold text-ink">{result.capacityLabel}</span>
-        </div>
+      <div className="mt-4 rounded-3xl bg-lake/10 p-5 md:p-7">
+        <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Your modern replacement class</p>
+        <p className="mt-2 font-display text-4xl leading-tight text-ink md:text-5xl">{result.capacityLabel}</p>
+        {result.reasoningSteps[0] ? (
+          <p className="mt-4 text-base leading-7 text-ink/80">
+            <span className="font-semibold text-ink">Why: </span>{result.reasoningSteps[0]}
+          </p>
+        ) : null}
+        <span className={`mt-4 inline-block rounded-full px-3 py-1.5 text-xs font-semibold ${badgeClassName}`}>{result.confidenceLabel}</span>
+      </div>
+      <div className="mt-5">
+        <h2 className="font-display text-2xl leading-tight text-ink md:text-3xl">{title}</h2>
+        <p className="mt-2 max-w-2xl text-base leading-7 text-ink/70">{result.affiliateMessage.subheadline}</p>
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[1.25fr_0.95fr]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[1.25fr_0.95fr]">
         <div className="space-y-5 rounded-3xl bg-mist p-5">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Recommended modern size</p>
-            <p className="mt-2 text-3xl font-semibold leading-tight text-ink md:text-4xl">{result.capacityLabel}</p>
-          </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Plain-English explanation</p>
             <p className="mt-2 text-base leading-7 text-ink/80 md:text-lg">{result.plainEnglishExplanation}</p>
