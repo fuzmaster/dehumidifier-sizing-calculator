@@ -7,6 +7,7 @@ import type {
   FilterProductsResult,
   LowTemperatureSuitability,
   ProductRecord,
+  VerificationStatus,
 } from '../types/calculator';
 
 function requiredTemperatureLevel(temperature: BasementTemperature): LowTemperatureSuitability {
@@ -57,8 +58,15 @@ function getAdjacentTiers(tier: CapacityTier): CapacityTier[] {
   }
 }
 
-function sortProducts(products: ProductRecord[]): ProductRecord[] {
-  return [...products].sort((left, right) => right.affiliatePriority - left.affiliatePriority);
+function verificationRank(status: VerificationStatus): number {
+  switch (status) {
+    case 'exact_model':
+      return 0;
+    case 'retailer_search':
+      return 1;
+    case 'category_search':
+      return 2;
+  }
 }
 
 function dedupeProducts(products: ProductRecord[]): ProductRecord[] {
@@ -67,6 +75,38 @@ function dedupeProducts(products: ProductRecord[]): ProductRecord[] {
 
 export function filterProducts(options: FilterProductsOptions): FilterProductsResult {
   const fallbackStepsUsed: string[] = [];
+  const pumpNeeded = options.drainagePreference === 'pump_needed';
+
+  function sortProducts(products: ProductRecord[]): ProductRecord[] {
+    return [...products].sort((left, right) => {
+      const verificationDiff = verificationRank(left.verificationStatus) - verificationRank(right.verificationStatus);
+      if (verificationDiff !== 0) {
+        return verificationDiff;
+      }
+
+      if (pumpNeeded) {
+        const leftPump = left.hasPump ? 1 : 0;
+        const rightPump = right.hasPump ? 1 : 0;
+        if (leftPump !== rightPump) {
+          return rightPump - leftPump;
+        }
+      }
+
+      const leftCapacityMatch = left.capacityTier === options.capacityTier ? 1 : 0;
+      const rightCapacityMatch = right.capacityTier === options.capacityTier ? 1 : 0;
+      if (leftCapacityMatch !== rightCapacityMatch) {
+        return rightCapacityMatch - leftCapacityMatch;
+      }
+
+      const leftBudgetMatch = left.priceTier === options.budgetRange ? 1 : 0;
+      const rightBudgetMatch = right.priceTier === options.budgetRange ? 1 : 0;
+      if (leftBudgetMatch !== rightBudgetMatch) {
+        return rightBudgetMatch - leftBudgetMatch;
+      }
+
+      return right.affiliatePriority - left.affiliatePriority;
+    });
+  }
 
   function addFallbackStep(step: string): void {
     if (!fallbackStepsUsed.includes(step)) {

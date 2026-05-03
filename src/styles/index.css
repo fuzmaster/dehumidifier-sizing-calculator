@@ -21,6 +21,14 @@
   a {
     @apply outline-none;
   }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  summary:focus-visible {
+    @apply ring-2 ring-lake ring-offset-2 ring-offset-sand;
+  }
 }
 
 @layer components {

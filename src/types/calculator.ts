@@ -29,6 +29,8 @@ export type RecommendationTier = CapacityTier | 'out_of_bounds';
 
 export type LowTemperatureSuitability = 'standard' | 'cool' | 'cold';
 
+export type VerificationStatus = 'exact_model' | 'retailer_search' | 'category_search';
+
 export interface CalculatorInputs {
   squareFootage: number;
   humiditySeverity: HumiditySeverity;
@@ -42,7 +44,7 @@ export interface Product {
   id: string;
   name: string;
   brand: string;
-  modelNumber: string;
+  modelNumber?: string;
   capacityTier: CapacityTier;
   capacityLabel: string;
   priceTier: BudgetRange;
@@ -53,6 +55,7 @@ export interface Product {
   bestFor: string;
   knownDownside: string;
   lastReviewed: string;
+  verificationStatus: VerificationStatus;
   imagePath: string;
   retailer: string;
   affiliateUrl: string;
@@ -73,7 +76,7 @@ export interface RecommendationResult {
   capacityTier: RecommendationTier;
   capacityLabel: string;
   plainEnglishExplanation: string;
-  whyThisResultHappened: string[];
+  reasoningSteps: string[];
   drainageRecommendation: string;
   temperatureNote: string;
   oldRatingTranslationNote: string;

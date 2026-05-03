@@ -24,6 +24,9 @@ export function CalculatorForm({ inputs, onChange, onSubmit }: CalculatorFormPro
         <label className="block text-sm font-semibold text-ink" htmlFor="squareFootage">
           Basement square footage
         </label>
+        <p className="mt-1 text-sm leading-6 text-ink/70">
+          Larger basements may need a stronger class even if the air only feels moderately damp.
+        </p>
         <input
           id="squareFootage"
           min={100}
@@ -39,6 +42,9 @@ export function CalculatorForm({ inputs, onChange, onSubmit }: CalculatorFormPro
         <label className="block text-sm font-semibold text-ink" htmlFor="humiditySeverity">
           Humidity severity
         </label>
+        <p className="mt-1 text-sm leading-6 text-ink/70">
+          Very wet spaces can push the recommendation above a simple replacement match.
+        </p>
         <select
           id="humiditySeverity"
           className={fieldClassName}
@@ -57,6 +63,9 @@ export function CalculatorForm({ inputs, onChange, onSubmit }: CalculatorFormPro
         <label className="block text-sm font-semibold text-ink" htmlFor="basementTemperature">
           Basement temperature
         </label>
+        <p className="mt-1 text-sm leading-6 text-ink/70">
+          Cool basements can reduce real-world performance, so low-temperature suitability matters.
+        </p>
         <select
           id="basementTemperature"
           className={fieldClassName}
@@ -75,6 +84,9 @@ export function CalculatorForm({ inputs, onChange, onSubmit }: CalculatorFormPro
         <label className="block text-sm font-semibold text-ink" htmlFor="drainagePreference">
           Drainage preference
         </label>
+        <p className="mt-1 text-sm leading-6 text-ink/70">
+          Choose pump needed if water must move upward to a sink, window, or drain line.
+        </p>
         <select
           id="drainagePreference"
           className={fieldClassName}
@@ -114,6 +126,9 @@ export function CalculatorForm({ inputs, onChange, onSubmit }: CalculatorFormPro
         <label className="block text-sm font-semibold text-ink" htmlFor="budgetRange">
           Budget range
         </label>
+        <p className="mt-1 text-sm leading-6 text-ink/70">
+          Budget is used as a preference, but capacity and drainage needs come first.
+        </p>
         <select
           id="budgetRange"
           className={fieldClassName}

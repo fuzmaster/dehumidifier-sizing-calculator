@@ -32,7 +32,10 @@ export function trackAffiliateCardClicked(payload: {
   retailer: string;
   resultCapacityTier: string;
   confidenceLevel: RecommendationAnalyticsPayload['confidenceLevel'];
+  fallbackStepsUsed?: string;
   productPosition: number;
+  productRankLabel: string;
+  verificationStatus: 'exact_model' | 'retailer_search' | 'category_search';
 }): void {
   trackEvent({
     name: 'affiliate_card_clicked',
@@ -45,7 +48,10 @@ export function trackAffiliateCtaClicked(payload: {
   retailer: string;
   resultCapacityTier: string;
   confidenceLevel: RecommendationAnalyticsPayload['confidenceLevel'];
+  fallbackStepsUsed?: string;
   productPosition: number;
+  productRankLabel: string;
+  verificationStatus: 'exact_model' | 'retailer_search' | 'category_search';
 }): void {
   trackEvent({
     name: 'affiliate_cta_clicked',

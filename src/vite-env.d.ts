@@ -1,13 +1,17 @@
 /// <reference types="vite/client" />
 
+interface ImportMetaEnv {
+  readonly VITE_ANALYTICS_PROVIDER?: 'console' | 'plausible' | 'ga4' | 'none';
+  readonly VITE_PLAUSIBLE_DOMAIN?: string;
+  readonly VITE_GA4_ID?: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+
 declare global {
   interface Window {
-    __APP_ANALYTICS__?: {
-      provider?: 'console' | 'plausible' | 'ga4' | 'none';
-      domain?: string;
-      measurementId?: string;
-      debug?: boolean;
-    };
     plausible?: (eventName: string, options?: { props?: Record<string, string | number | boolean> }) => void;
     gtag?: (...args: unknown[]) => void;
   }

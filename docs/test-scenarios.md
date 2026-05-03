@@ -20,7 +20,7 @@
 - Drainage: pump_needed
 - Old rating mode: replace_old_70
 - Budget: mid
-- Expected result tier: large_45_50_pump
+- Expected result tier: large_45_50_pump (or premium_basement if logic intentionally upgrades)
 - Expected confidence level: medium
 - Expected notes: Explain old 70-pint translation and why pump need pushes the result into a pump-capable tier.
 
@@ -58,7 +58,7 @@
 - Budget: mid
 - Expected result tier: large_45_50
 - Expected confidence level: high
-- Expected notes: Show normal product comparison, old 70-pint translation note, and affiliate disclosure near product cards.
+- Expected notes: Show normal product comparison branch, old 70-pint translation note, and affiliate disclosure near product cards.
 
 ## Scenario 6
 

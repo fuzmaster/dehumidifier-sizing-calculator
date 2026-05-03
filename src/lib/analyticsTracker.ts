@@ -10,11 +10,14 @@ interface AnalyticsConfig {
 }
 
 function getAnalyticsConfig(): AnalyticsConfig {
+  const configuredProvider = import.meta.env.VITE_ANALYTICS_PROVIDER;
+  const provider = configuredProvider ?? (import.meta.env.DEV ? 'console' : 'none');
+
   return {
-    provider: window.__APP_ANALYTICS__?.provider ?? 'console',
-    domain: window.__APP_ANALYTICS__?.domain,
-    measurementId: window.__APP_ANALYTICS__?.measurementId,
-    debug: window.__APP_ANALYTICS__?.debug,
+    provider,
+    domain: import.meta.env.VITE_PLAUSIBLE_DOMAIN,
+    measurementId: import.meta.env.VITE_GA4_ID,
+    debug: import.meta.env.DEV,
   };
 }
 
@@ -31,9 +34,13 @@ export function trackAnalyticsEvent(event: AnalyticsEvent): void {
       console.info('[analytics]', event.name, payload);
       return;
     case 'plausible':
-      window.plausible?.(event.name, { props: payload });
-      if (config.debug) {
-        console.info('[plausible]', event.name, payload);
+      if (config.domain) {
+        window.plausible?.(event.name, { props: payload });
+        if (config.debug) {
+          console.info('[plausible]', event.name, payload);
+        }
+      } else if (config.debug) {
+        console.warn('[plausible] missing VITE_PLAUSIBLE_DOMAIN');
       }
       return;
     case 'ga4':

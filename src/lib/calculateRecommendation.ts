@@ -99,7 +99,7 @@ export function calculateRecommendation(inputs: CalculatorInputs): Recommendatio
       capacityLabel: 'Portable dehumidifier sizing is not the right next step',
       plainEnglishExplanation:
         'This input set points beyond normal portable-unit shopping, so the responsible next step is fixing the water problem before comparing products.',
-      whyThisResultHappened: [
+      reasoningSteps: [
         'The space or moisture condition entered is outside the range where a portable basement dehumidifier is a reliable first comparison.',
       ],
       drainageRecommendation:
@@ -122,42 +122,50 @@ export function calculateRecommendation(inputs: CalculatorInputs): Recommendatio
 
   const conditionTier = getConditionBasedTier(inputs);
   let finalTier = conditionTier;
-  const whyThisResultHappened = [
+  const reasoningSteps = [
     `Condition-based sizing points to ${tierLabels[conditionTier]} for the square footage and moisture level entered.`,
   ];
 
   if (inputs.confusionMode in doeConversionRules) {
     const convertedTier = doeConversionRules[inputs.confusionMode as keyof typeof doeConversionRules];
     finalTier = chooseHigherTier(conditionTier, convertedTier);
-    whyThisResultHappened.push(doeConversionCopy[inputs.confusionMode as keyof typeof doeConversionCopy]);
+    reasoningSteps.push(doeConversionCopy[inputs.confusionMode as keyof typeof doeConversionCopy]);
 
     if (finalTier !== convertedTier) {
-      whyThisResultHappened.push('Your basement conditions suggest stepping up beyond the old-rating conversion, so the larger tier wins.');
+      reasoningSteps.push('Your basement conditions suggest stepping up beyond the old-rating conversion, so the larger tier wins.');
     }
   } else if (inputs.confusionMode === 'replace_old_unknown') {
-    whyThisResultHappened.push('Without the old pint rating, this recommendation stays anchored to basement conditions instead of guesswork.');
+    reasoningSteps.push('Without the old pint rating, this recommendation stays anchored to basement conditions instead of guesswork.');
   }
 
   if (inputs.drainagePreference === 'pump_needed') {
     finalTier = finalTier === 'premium_basement' ? 'premium_basement' : 'large_45_50_pump';
-    whyThisResultHappened.push('Because you need pumped drainage, the recommendation shifts to a pump-equipped basement model.');
+    reasoningSteps.push('Because you need pumped drainage, the recommendation shifts to a pump-equipped basement model.');
+  } else if (inputs.drainagePreference === 'gravity_drain') {
+    reasoningSteps.push('Gravity drainage is available, so a pump is optional unless your layout needs one.');
   }
 
   if (inputs.basementTemperature === 'under_60' && finalTier === 'large_45_50') {
-    whyThisResultHappened.push('Cooler basements often benefit from models with stronger low-temperature performance.');
+    reasoningSteps.push('Cooler basements often benefit from models with stronger low-temperature performance.');
   }
 
   if (inputs.budgetRange === 'premium' && finalTier === 'large_45_50') {
     finalTier = 'premium_basement';
-    whyThisResultHappened.push('You selected a premium budget range, so a premium basement-class 50-pint model is the better fit inside this tier.');
+    reasoningSteps.push('You selected a premium budget range, so a premium basement-class 50-pint model is the better fit inside this tier.');
   }
+
+  if (reasoningSteps.length < 3) {
+    reasoningSteps.push(`For ${inputs.squareFootage} sq ft, this is the safest shopping tier to compare first.`);
+  }
+
+  const limitedReasoningSteps = reasoningSteps.slice(0, 5);
 
   return {
     status: 'ok',
     capacityTier: finalTier,
     capacityLabel: tierLabels[finalTier],
-    plainEnglishExplanation: `Start by comparing ${tierLabels[finalTier]} models first. This is the most practical replacement class for the basement conditions you entered.`,
-    whyThisResultHappened,
+    plainEnglishExplanation: `Start by comparing ${tierLabels[finalTier]} models first. This is the safest shopping tier to compare first for the basement conditions you entered.`,
+    reasoningSteps: limitedReasoningSteps,
     drainageRecommendation: getDrainageRecommendation(inputs),
     temperatureNote: getTemperatureNote(inputs, finalTier),
     oldRatingTranslationNote: getOldRatingTranslationNote(inputs, finalTier, conditionTier),

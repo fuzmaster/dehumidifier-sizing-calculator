@@ -96,11 +96,10 @@ export function ResultPanel({ result, title, eyebrow, preview = false }: ResultP
       <div className="mt-4 flex flex-wrap items-start justify-between gap-4">
         <div>
           <h2 className="font-display text-3xl leading-tight md:text-4xl">{title}</h2>
-          <p className="mt-3 max-w-2xl text-base leading-7 text-ink/70">
-            {result.affiliateMessage.subheadline}
-          </p>
+          <p className="mt-3 max-w-2xl text-base leading-7 text-ink/70">{result.affiliateMessage.subheadline}</p>
         </div>
         <div className="flex flex-col items-start gap-2 sm:items-end">
+          <span className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">Confidence</span>
           <span className={`rounded-full px-4 py-2 text-sm font-semibold ${badgeClassName}`}>{result.confidenceLabel}</span>
           <span className="rounded-full bg-sand px-4 py-2 text-sm font-semibold text-ink">{result.capacityLabel}</span>
         </div>
@@ -117,9 +116,9 @@ export function ResultPanel({ result, title, eyebrow, preview = false }: ResultP
             <p className="mt-2 text-base leading-7 text-ink/80 md:text-lg">{result.plainEnglishExplanation}</p>
           </div>
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Why this result happened</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Why you got this result</p>
             <ul className="mt-3 space-y-3 text-sm leading-6 text-ink/80 md:text-base">
-              {result.whyThisResultHappened.map((item) => (
+              {result.reasoningSteps.map((item) => (
                 <li key={item} className="flex gap-3">
                   <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-lake" aria-hidden="true" />
                   <span>{item}</span>
@@ -141,6 +140,10 @@ export function ResultPanel({ result, title, eyebrow, preview = false }: ResultP
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">Old-rating translation note</p>
             <p className="mt-2 text-base leading-7 text-ink/80">{result.oldRatingTranslationNote}</p>
+          </div>
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">Safety note</p>
+            <p className="mt-2 text-base leading-7 text-ink/80">{result.safetyNote}</p>
           </div>
         </div>
       </div>

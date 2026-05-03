@@ -1,126 +1,39 @@
 # Old vs New Dehumidifier Rating Calculator
 
-A static Vite + React + TypeScript calculator for homeowners replacing older basement dehumidifiers and trying to understand modern DOE capacity labels.
+Conversion-focused shopping calculator for homeowners replacing older basement dehumidifiers, especially old 70-pint models that no longer map cleanly to modern DOE labels.
 
-The app focuses on one specific buying problem: an old 70-pint unit often does not map cleanly to newer labels, so shoppers need a plain-English recommendation for the right modern class before they compare products.
+- Live app: https://dehumidifier-sizing-calculator.vercel.app/
+- Screenshot: ![Old vs New Dehumidifier Rating Calculator](docs/images/app-screenshot.png)
 
-Live app: https://dehumidifier-sizing-calculator.vercel.app/
+## Project purpose
 
-## Screenshot
+- Target intent: old 70-pint dehumidifier replacement calculator.
+- Explain why legacy pint labels and current DOE labels differ.
+- Produce a clear shopping tier with reasoning, not a black-box output.
+- Show affiliate product comparisons only in safe normal sizing states.
 
-![Old vs New Dehumidifier Rating Calculator](docs/images/app-screenshot.png)
-
-## What it does
-
-- Translates basement inputs into a modern dehumidifier size class.
-- Helps users compare old 30, 50, and 70-pint labels against current DOE labels.
-- Adjusts recommendations for moisture severity, drainage needs, basement temperature, and budget.
-- Shows static product comparison cards only for normal in-bounds recommendation states.
-- Stops product recommendations and switches to a professional-review panel for flooded or out-of-bounds scenarios.
-
-## Guardrails
-
-This project is a shopping guide, not a diagnostic tool.
-
-- It does not diagnose mold, leaks, HVAC problems, foundation issues, structural problems, or health risks.
-- It does not make remediation, legal, safety, or performance guarantees.
-- Flooded basements and very large spaces intentionally suppress product recommendations and trigger a professional-review state.
-
-## Tech stack
-
-- Vite
-- React 18
-- TypeScript
-- Tailwind CSS
-
-## Local development
-
-Install dependencies and start the dev server:
+## Local setup
 
 ```bash
 npm install
 npm run dev
 ```
 
-Build the production bundle:
+## Build and scenario checks
 
 ```bash
 npm run build
+npm run check:scenarios
 ```
 
-Preview the production build locally:
+`check:scenarios` validates key recommendation outcomes and comparison-branch behavior.
 
-```bash
-npm run preview
-```
+## Analytics env vars
 
-## Project structure
+Analytics is env-driven and defaults to:
 
-```text
-src/
-  app/                App shell and page composition
-  components/         Calculator, result, product, and content UI
-  data/               Static catalog and sizing/content rules
-  lib/                Recommendation, filtering, formatting, analytics helpers
-  styles/             Global CSS
-  types/              Shared TypeScript types
-docs/                 Manual test scenarios and content notes
-public/               Static images and assets
-```
-
-## Recommendation behavior
-
-Normal in-bounds results include:
-
-- recommended modern size
-- confidence badge
-- explanation and reasoning
-- drainage and temperature notes
-- old-rating translation note
-- product comparison cards
-
-Professional-review results are triggered when:
-
-- `status === "out_of_bounds"`
-- or `confidenceLevel === "professional_review"`
-
-In that state, the app does not show product cards, affiliate CTAs, or shopping language.
-
-## Product catalog policy
-
-- Product records are static and manually reviewed.
-- Prices are not live.
-- Retailer links are static search-style listings.
-- The app does not scrape retailer prices.
-- Comparison fallback logic may relax some filters to keep options available, but that is disclosed in the UI.
-
-## Ratings change source context
-
-The app references plain-English source context around why modern labels can appear smaller than older ratings.
-
-Primary references used in the content:
-
-- ENERGY STAR dehumidifier testing and capacity
-- ENERGY STAR dehumidifier criteria
-- EPA moisture guidance
-
-The project does not claim endorsement from ENERGY STAR, EPA, or any government agency.
-
-## Analytics configuration
-
-Analytics settings are read from `window.__APP_ANALYTICS__` in `index.html`.
-
-Example:
-
-```html
-<script>
-  window.__APP_ANALYTICS__ = {
-    provider: 'plausible',
-    domain: 'example.com',
-    debug: false,
-  };
-</script>
-```
+- development: `console`
+- production without provider: `none`
 
 Supported providers:
 
@@ -128,6 +41,14 @@ Supported providers:
 - `plausible`
 - `ga4`
 - `none`
+
+Set in `.env` or Vercel project envs:
+
+```bash
+VITE_ANALYTICS_PROVIDER=plausible
+VITE_PLAUSIBLE_DOMAIN=dehumidifier-sizing-calculator.vercel.app
+VITE_GA4_ID=G-XXXXXXXXXX
+```
 
 Tracked events:
 
@@ -137,23 +58,54 @@ Tracked events:
 - `affiliate_card_clicked`
 - `affiliate_cta_clicked`
 
-## Deployment
+## Product catalog policy
 
-This is a static frontend app and can be deployed to Vercel, Netlify, or any static host.
+- Catalog is static and manually reviewed.
+- Retailer pricing is not live and may change.
+- Links may be exact model listings, retailer search listings, or category search listings.
+- Comparison fallback logic can relax filters to keep options available and this is disclosed in the UI.
+- The app does not scrape retailer prices.
 
-Current production deployment:
+## Quarterly manual review policy
 
-- Live URL: `https://dehumidifier-sizing-calculator.vercel.app/`
+- Review every catalog entry at least once per quarter.
+- Confirm listing relevance, drainage claims, and low-temperature suitability notes.
+- Update outdated links, remove stale entries, and refresh trust timestamps.
+
+## Safety boundaries
+
+This is a shopping guide, not a diagnostic system.
+
+- No diagnosis of mold, leaks, HVAC, foundation, or structural issues.
+- No remediation, legal, health, or performance guarantees.
+- Flooded or out-of-range scenarios intentionally suppress product recommendations.
+
+## Affiliate disclosure policy
+
+- Affiliate disclosure appears near product comparisons in normal result states.
+- Affiliate/product CTAs are hidden in professional-review or out-of-bounds states.
+- Footer disclosure remains visible site-wide.
+
+## Vercel deployment notes
+
+This is a static frontend deployment.
 
 - Build command: `npm run build`
 - Output directory: `dist`
-- No backend, database, or server routes required
+- No backend, auth, or database required
+- Configure analytics via Vite env vars in Vercel project settings
 
-## Manual testing
+## Project structure
 
-See `docs/test-scenarios.md` for expected calculator outcomes, including:
-
-- flooded and out-of-bounds professional-review behavior
-- old 70-pint replacement scenarios
-- drainage-specific recommendation paths
-- affiliate disclosure and product comparison visibility rules
+```text
+src/
+  app/                App composition
+  components/         Calculator/result/product/disclosure/content UI
+  data/               Static catalog and sizing/content rules
+  lib/                Recommendation, filtering, analytics, tracking helpers
+  styles/             Global CSS
+  types/              Shared TypeScript types
+docs/                 Manual scenario matrix and project docs
+scripts/              Scenario automation scripts
+public/               Static assets
+```

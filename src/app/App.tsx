@@ -3,7 +3,7 @@ import { CalculatorForm } from '../components/CalculatorForm';
 import { Layout } from '../components/Layout';
 import { ProductCard } from '../components/ProductCard';
 import { ResultPanel } from '../components/ResultPanel';
-import { SeoContentBlock } from '../components/SeoContentBlock';
+import { SeoContentBlock, SourceProofStrip } from '../components/SeoContentBlock';
 import { AffiliateDisclosure } from '../components/AffiliateDisclosure';
 import { calculateRecommendation } from '../lib/calculateRecommendation';
 import { filterProducts } from '../lib/filterProducts';
@@ -57,6 +57,10 @@ export default function App() {
           budgetRange: submittedInputs.budgetRange,
         })
       : null;
+  const shouldShowComparisonSection =
+    submittedRecommendation?.status === 'ok' &&
+    submittedRecommendation.confidenceLevel !== 'professional_review' &&
+    !!productMatches;
 
   useEffect(() => {
     if (!submittedRecommendation || !submittedResultRef.current) {
@@ -86,6 +90,16 @@ export default function App() {
     setSubmittedInputs({ ...inputs });
 
     const result = calculateRecommendation(inputs);
+    const resultCapacityTier = isCapacityTier(result.capacityTier) ? result.capacityTier : null;
+    const fallbackMatches =
+      result.status === 'ok' && result.confidenceLevel !== 'professional_review' && resultCapacityTier
+        ? filterProducts({
+            capacityTier: resultCapacityTier,
+            drainagePreference: inputs.drainagePreference,
+            basementTemperature: inputs.basementTemperature,
+            budgetRange: inputs.budgetRange,
+          })
+        : null;
     const analyticsPayload: RecommendationAnalyticsPayload = {
       squareFootage: inputs.squareFootage,
       humiditySeverity: inputs.humiditySeverity,
@@ -95,18 +109,40 @@ export default function App() {
       budgetRange: inputs.budgetRange,
       resultCapacityTier: result.capacityTier,
       confidenceLevel: result.confidenceLevel,
-      fallbackStepsUsed: productMatches?.fallbackStepsUsed.join(' | '),
+      fallbackStepsUsed: fallbackMatches?.fallbackStepsUsed.join(' | '),
     };
 
     trackCalculatorCompleted(analyticsPayload);
     trackResultCapacityTier({
       resultCapacityTier: result.capacityTier,
       confidenceLevel: result.confidenceLevel,
-      fallbackStepsUsed: productMatches?.fallbackStepsUsed.join(' | '),
+      fallbackStepsUsed: fallbackMatches?.fallbackStepsUsed.join(' | '),
     });
   }
 
-  function handleAffiliateCardClick(product: ProductRecord, productPosition: number) {
+  function getProductRankLabel(product: ProductRecord, productPosition: number): string {
+    const pumpNeeded = submittedInputs?.drainagePreference === 'pump_needed';
+
+    if (pumpNeeded && product.hasPump) {
+      return 'Best pump option';
+    }
+
+    if (productPosition === 1) {
+      return 'Best first comparison';
+    }
+
+    if (product.priceTier === 'budget') {
+      return 'Budget alternative';
+    }
+
+    if (product.smartFeatures.length > 0) {
+      return 'Smart-control option';
+    }
+
+    return 'Comparison option';
+  }
+
+  function handleAffiliateCardClick(product: ProductRecord, productPosition: number, productRankLabel: string) {
     if (!submittedRecommendation) {
       return;
     }
@@ -116,22 +152,28 @@ export default function App() {
       retailer: product.retailer,
       resultCapacityTier: submittedRecommendation.capacityTier,
       confidenceLevel: submittedRecommendation.confidenceLevel,
+      fallbackStepsUsed: productMatches?.fallbackStepsUsed.join(' | '),
       productPosition,
+      productRankLabel,
+      verificationStatus: product.verificationStatus,
     });
   }
 
-  function handleAffiliateCtaClick(product: ProductRecord, productPosition: number) {
+  function handleAffiliateCtaClick(product: ProductRecord, productPosition: number, productRankLabel: string) {
     if (!submittedRecommendation) {
       return;
     }
 
-    handleAffiliateCardClick(product, productPosition);
+    handleAffiliateCardClick(product, productPosition, productRankLabel);
     trackAffiliateCtaClicked({
       productId: product.id,
       retailer: product.retailer,
       resultCapacityTier: submittedRecommendation.capacityTier,
       confidenceLevel: submittedRecommendation.confidenceLevel,
+      fallbackStepsUsed: productMatches?.fallbackStepsUsed.join(' | '),
       productPosition,
+      productRankLabel,
+      verificationStatus: product.verificationStatus,
     });
   }
 
@@ -144,24 +186,24 @@ export default function App() {
               Basement buying guide
             </p>
             <h1 className="mt-6 max-w-3xl font-display text-4xl leading-tight text-ink md:text-6xl">
-              Replacing an old 70-pint dehumidifier? Start with the right modern size.
+              Old 70-Pint Dehumidifier Replacement Calculator
             </h1>
             <p className="mt-6 max-w-2xl text-xl leading-8 text-ink/80">
-              New DOE labels can look smaller than older labels. This calculator helps you compare the right 22,
-              35, 50-pint, or pump-equipped class for your basement.
+              New DOE labels can look smaller than older labels. Use this calculator to find the modern 22, 35,
+              50-pint, or pump-equipped class to compare first.
             </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               <div className="rounded-3xl border border-ink/10 bg-white/80 p-5 shadow-sm backdrop-blur">
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Old 70-pint confusion</p>
-                <p className="mt-2 text-base leading-7 text-ink/75">Modern labels are lower, so the right replacement class can look smaller at first glance.</p>
+                <p className="mt-2 text-base leading-7 text-ink/75">Older 70-pint labels often compare closer to current 45-50 pint classes.</p>
               </div>
               <div className="rounded-3xl border border-ink/10 bg-white/80 p-5 shadow-sm backdrop-blur">
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Basement drainage matters</p>
-                <p className="mt-2 text-base leading-7 text-ink/75">Pump or gravity drainage changes which units are practical, not just which labels look familiar.</p>
+                <p className="mt-2 text-base leading-7 text-ink/75">Pump and gravity-drain needs can change which units make sense.</p>
               </div>
               <div className="rounded-3xl border border-ink/10 bg-white/80 p-5 shadow-sm backdrop-blur">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Static catalog</p>
-                <p className="mt-2 text-base leading-7 text-ink/75">Catalog rules are manually reviewed and prices are not live retailer feeds.</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Static catalog, no live prices</p>
+                <p className="mt-2 text-base leading-7 text-ink/75">Product matches use manually reviewed catalog rules. Retailer prices may change.</p>
               </div>
             </div>
           </div>
@@ -193,7 +235,7 @@ export default function App() {
       ) : null}
 
       <section className="mx-auto max-w-7xl px-6 pb-12 md:pb-16">
-        <SeoContentBlock proofOnly />
+        <SourceProofStrip />
       </section>
 
       {submittedRecommendation ? (
@@ -204,14 +246,15 @@ export default function App() {
               title="Your basement recommendation"
               result={submittedRecommendation}
             />
-            {submittedRecommendation.status === 'ok' && productMatches ? (
+            {shouldShowComparisonSection && productMatches ? (
               <div className="space-y-6">
                 <div className="flex flex-wrap items-end justify-between gap-4">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-moss">Product comparison</p>
                     <h2 className="mt-2 font-display text-3xl md:text-4xl">Compare these first</h2>
                     <p className="mt-2 max-w-2xl text-base leading-7 text-ink/70">
-                      These product links are matched to your result using static catalog rules. Prices are not live.
+                      These links are matched to your result using static catalog rules. Retailer price may change, so
+                      confirm today&apos;s listing before buying.
                     </p>
                   </div>
                   <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-lake shadow-sm">
@@ -226,6 +269,7 @@ export default function App() {
                       product={product}
                       capacityTier={submittedRecommendation.capacityLabel}
                       productPosition={index + 1}
+                      rankLabel={getProductRankLabel(product, index + 1)}
                       onCtaClick={handleAffiliateCtaClick}
                     />
                   ))}
@@ -245,10 +289,6 @@ export default function App() {
                   </div>
                 ) : null}
 
-                <div className="rounded-2xl border border-ink/10 px-5 py-4 text-base leading-7 text-ink/80">
-                  <p className="font-semibold text-ink">Safety note</p>
-                  <p className="mt-2">{submittedRecommendation.safetyNote}</p>
-                </div>
               </div>
             ) : null}
           </div>

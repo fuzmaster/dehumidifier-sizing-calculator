@@ -1,20 +1,16 @@
-interface SeoContentBlockProps {
-  proofOnly?: boolean;
-}
-
-function WhyRatingsChangedSection() {
+export function SourceProofStrip() {
   return (
     <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
-      <p className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">Why the ratings changed</p>
-      <p className="mt-3 text-lg font-semibold leading-8 text-ink">
+      <h2 className="font-display text-3xl md:text-4xl">Why the ratings changed</h2>
+      <p className="mt-4 text-lg font-semibold leading-8 text-ink">
         The rating system changed, so a newer 50-pint label may be the correct replacement class for many older 70-pint units.
       </p>
-      <div className="mt-5 grid gap-4 md:grid-cols-3">
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
         <a
           href="https://www.energystar.gov/products/dehumidifier_testing_and_capacity"
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-2xl border border-ink/10 bg-mist p-4 transition hover:border-lake"
+          className="rounded-2xl border border-ink/10 bg-mist p-4 transition hover:border-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lake"
         >
           <p className="font-semibold text-ink">ENERGY STAR testing and capacity</p>
           <p className="mt-2 text-base leading-7 text-ink/75">Why modern capacity labels look smaller and how testing standards changed.</p>
@@ -23,79 +19,149 @@ function WhyRatingsChangedSection() {
           href="https://www.energystar.gov/products/dehumidifiers"
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-2xl border border-ink/10 bg-mist p-4 transition hover:border-lake"
+          className="rounded-2xl border border-ink/10 bg-mist p-4 transition hover:border-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lake"
         >
           <p className="font-semibold text-ink">ENERGY STAR dehumidifier criteria</p>
-          <p className="mt-2 text-base leading-7 text-ink/75">Current class and efficiency context for consumer dehumidifier comparisons.</p>
+          <p className="mt-2 text-base leading-7 text-ink/75">Current class and efficiency context for dehumidifier comparisons.</p>
         </a>
         <a
           href="https://www.epa.gov/mold/brief-guide-mold-moisture-and-your-home"
           target="_blank"
           rel="noopener noreferrer"
-          className="rounded-2xl border border-ink/10 bg-mist p-4 transition hover:border-lake"
+          className="rounded-2xl border border-ink/10 bg-mist p-4 transition hover:border-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lake"
         >
           <p className="font-semibold text-ink">EPA moisture guidance</p>
-          <p className="mt-2 text-base leading-7 text-ink/75">Practical moisture-control context and why source issues still need attention.</p>
+          <p className="mt-2 text-base leading-7 text-ink/75">Practical moisture-control context and when source fixes come first.</p>
         </a>
       </div>
     </section>
   );
 }
 
-export function SeoContentBlock({ proofOnly = false }: SeoContentBlockProps) {
-  if (proofOnly) {
-    return <WhyRatingsChangedSection />;
-  }
+export function SeoContentBlock() {
+  const officialResources = [
+    {
+      href: 'https://www.energystar.gov/products/dehumidifiers',
+      label: 'ENERGY STAR dehumidifiers',
+      description: 'Federal efficiency program guidance and buying context for dehumidifiers.',
+    },
+    {
+      href: 'https://www.energystar.gov/productfinder/product/certified-dehumidifiers/results',
+      label: 'ENERGY STAR certified model finder',
+      description: 'Search certified dehumidifier models and compare options by class.',
+    },
+    {
+      href: 'https://www.epa.gov/mold',
+      label: 'EPA mold and moisture guidance',
+      description: 'Official moisture-control and mold-prevention information for homes.',
+    },
+    {
+      href: 'https://www.cdc.gov/mold-health/about/index.html',
+      label: 'CDC mold health guidance',
+      description: 'Health-focused humidity and mold prevention recommendations.',
+    },
+    {
+      href: 'https://www.energy.gov/energysaver/moisture-control',
+      label: 'DOE Energy Saver moisture control',
+      description: 'U.S. Department of Energy home moisture-control best practices.',
+    },
+    {
+      href: 'https://www.cpsc.gov/Recalls',
+      label: 'CPSC recalls and safety warnings',
+      description: 'Check current U.S. product recalls and safety alerts before buying.',
+    },
+    {
+      href: 'https://www.ncei.noaa.gov/access/us-climate-normals/',
+      label: 'NOAA climate normals',
+      description: 'Local long-term climate averages that help contextualize basement humidity.',
+    },
+  ];
 
   return (
     <div className="space-y-8">
       <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
-        <h2 className="font-display text-3xl md:text-4xl">Why old dehumidifier ratings feel misleading now</h2>
+        <h2 className="font-display text-3xl md:text-4xl">Old vs newer DOE label comparison</h2>
+        <div className="mt-5 overflow-x-auto rounded-2xl border border-ink/10">
+          <table className="min-w-full divide-y divide-ink/10 text-left text-base">
+            <thead className="bg-mist">
+              <tr>
+                <th className="px-4 py-3 font-semibold text-ink">Older label</th>
+                <th className="px-4 py-3 font-semibold text-ink">Start by comparing</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-ink/10 bg-white">
+              <tr>
+                <td className="px-4 py-3 text-ink/80">Older 30-pint label</td>
+                <td className="px-4 py-3 text-ink/80">Current 20-22 pint class</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 text-ink/80">Older 50-pint label</td>
+                <td className="px-4 py-3 text-ink/80">Current 30-35 pint class</td>
+              </tr>
+              <tr>
+                <td className="px-4 py-3 text-ink/80">Older 70-pint label</td>
+                <td className="px-4 py-3 text-ink/80">Current 45-50 pint class</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4 text-sm leading-6 text-ink/70">
+          These are shopping comparison classes, not a guarantee that every old and new model performs identically.
+        </p>
+      </section>
+
+      <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
+        <h2 className="font-display text-3xl md:text-4xl">Old 70-pint replacement: what to compare first</h2>
         <div className="mt-5 space-y-4 text-base leading-7 text-ink/75">
           <p>
-            Older dehumidifiers were commonly marketed with pint ratings measured under different test conditions.
-            Current DOE labels are more conservative, so a homeowner replacing an old 50-pint unit can feel like they
-            need to downsize when they really just need the modern equivalent.
+            If you are replacing an old 70-pint unit, start by comparing modern 45-50 pint DOE models before assuming
+            you need the same printed number. New testing standards make current labels look smaller.
           </p>
           <p>
-            This calculator compares your basement size, moisture severity, temperature, drainage setup, and budget so
-            the recommendation stays grounded in how the space behaves instead of marketing shorthand alone.
-          </p>
-          <p>
-            If your basement is very large or actively flooded, the tool stops early because portable units are not a
-            reliable stand-in for a full site assessment.
+            This calculator weighs square footage, humidity severity, temperature, drainage layout, and budget so you
+            can compare the right class first instead of shopping by label memory alone.
           </p>
         </div>
       </section>
 
       <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
-        <h2 className="font-display text-3xl md:text-4xl">How old ratings line up with newer DOE labels</h2>
-        <div className="mt-6 space-y-6 text-base leading-7 text-ink/75">
-          <div>
-            <h3 className="text-xl font-semibold text-ink">Old 30-pint vs new 20-22 pint</h3>
-            <p className="mt-2">If you are replacing an older 30-pint unit, start by comparing today&apos;s 20-22 pint class first. The printed number looks lower, but the shopping tier is often the right place to begin.</p>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-ink">Old 50-pint vs new 30-35 pint</h3>
-            <p className="mt-2">Many shoppers replacing an old 50-pint model land in the current 30-35 pint DOE class, unless the basement is larger, colder, or wetter than average.</p>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-ink">Old 70-pint vs new 45-50 pint</h3>
-            <p className="mt-2">Older 70-pint models often line up closer to the modern 45-50 pint class. That is why newer labels can feel unexpectedly smaller at first glance.</p>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-ink">Pump vs gravity drain</h3>
-            <p className="mt-2">Pump models help when you need to send water upward or across the room. Gravity drain models are usually simpler if you already have a floor drain or lower drain point nearby.</p>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-ink">Why cold basements need careful product matching</h3>
-            <p className="mt-2">Capacity alone is not enough in a cold basement. Compare the stated operating range and defrost behavior because some units are better suited to cool spaces than others.</p>
-          </div>
-          <div>
-            <h3 className="text-xl font-semibold text-ink">When a portable dehumidifier is not enough</h3>
-            <p className="mt-2">If the basement is flooded or extremely large, a portable unit is not a complete shopping answer. Use that as a cue to compare broader drainage or professional site-review options first.</p>
-          </div>
-        </div>
+        <h2 className="font-display text-3xl md:text-4xl">Is a new 50-pint the same as an old 70-pint?</h2>
+        <p className="mt-5 text-base leading-7 text-ink/75">
+          Not exactly model-for-model, but the shopping class is often similar. The older rating standard and current
+          DOE standard are not directly interchangeable, so this tool uses your basement conditions to keep comparisons realistic.
+        </p>
+      </section>
+
+      <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
+        <h2 className="font-display text-3xl md:text-4xl">When to choose a pump model</h2>
+        <p className="mt-5 text-base leading-7 text-ink/75">
+          Choose a pump model when water must move upward or across the basement to a sink, window, or drain line.
+          If a floor drain is lower than the unit, gravity drainage is often simpler and cheaper.
+        </p>
+      </section>
+
+      <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
+        <h2 className="font-display text-3xl md:text-4xl">Why cold basements complicate sizing</h2>
+        <p className="mt-5 text-base leading-7 text-ink/75">
+          Lower temperatures can reduce effective moisture removal. Capacity class still matters, but low-temperature
+          suitability and defrost behavior become just as important when basements trend below 60°F.
+        </p>
+      </section>
+
+      <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
+        <h2 className="font-display text-3xl md:text-4xl">Why square footage alone is not enough</h2>
+        <p className="mt-5 text-base leading-7 text-ink/75">
+          Two basements with the same size can need different classes based on moisture severity, temperature, drainage
+          constraints, and old-label replacement context. That is why this calculator combines multiple inputs.
+        </p>
+      </section>
+
+      <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
+        <h2 className="font-display text-3xl md:text-4xl">When a portable dehumidifier is not enough</h2>
+        <p className="mt-5 text-base leading-7 text-ink/75">
+          Flooding, active seepage, and very large basement footprints can exceed normal portable-unit sizing. In those
+          scenarios, use this tool after the moisture source and drainage problem are addressed.
+        </p>
       </section>
 
       <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
@@ -104,31 +170,43 @@ export function SeoContentBlock({ proofOnly = false }: SeoContentBlockProps) {
           <details className="rounded-2xl border border-ink/10 px-5 py-4" open>
             <summary className="cursor-pointer text-lg font-semibold text-ink">Why does an old 70-pint unit map closer to a current 50-pint class model?</summary>
             <p className="mt-3 text-base leading-7 text-ink/75">
-              The older rating system used different test conditions, so modern DOE numbers are lower for roughly similar
-              real-world moisture removal classes.
+              Older labels and current DOE labels use different test standards. That is why the right modern shopping class can show a smaller printed number.
             </p>
           </details>
           <details className="rounded-2xl border border-ink/10 px-5 py-4">
             <summary className="cursor-pointer text-lg font-semibold text-ink">When should I prefer a pump model?</summary>
             <p className="mt-3 text-base leading-7 text-ink/75">
-              Choose a pump-capable model when you need the condensate sent upward or across the room because a floor
-              drain is not available near the unit.
+              Use pump models when gravity drainage is not practical and condensate must travel upward or farther away.
             </p>
           </details>
           <details className="rounded-2xl border border-ink/10 px-5 py-4">
             <summary className="cursor-pointer text-lg font-semibold text-ink">What if my basement is under 60°F?</summary>
             <p className="mt-3 text-base leading-7 text-ink/75">
-              Cooler basements can reduce coil efficiency. Favor models that explicitly mention low-temperature or
-              defrost support and avoid assuming every 50-pint unit performs the same way.
+              Favor products that explicitly mention low-temperature suitability and defrost behavior for cool basements.
             </p>
           </details>
-          <details className="rounded-2xl border border-ink/10 px-5 py-4">
-            <summary className="cursor-pointer text-lg font-semibold text-ink">Does a higher price tier always mean better moisture control?</summary>
-            <p className="mt-3 text-base leading-7 text-ink/75">
-              Not always. Higher tiers often add quieter operation, controls, or drainage convenience. Capacity fit and
-              drainage setup still matter more than a premium badge alone.
-            </p>
-          </details>
+        </div>
+      </section>
+
+      <section className="rounded-[2rem] border border-ink/10 bg-white p-6 shadow-soft md:p-8">
+        <h2 className="font-display text-3xl md:text-4xl">See also: official resources</h2>
+        <p className="mt-4 max-w-3xl text-base leading-7 text-ink/75">
+          For deeper research, use these government and federal-program sources for standards, safety,
+          and indoor moisture guidance.
+        </p>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          {officialResources.map((resource) => (
+            <a
+              key={resource.href}
+              href={resource.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-2xl border border-ink/10 bg-mist p-4 transition hover:border-lake focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lake"
+            >
+              <p className="font-semibold text-ink">{resource.label}</p>
+              <p className="mt-2 text-base leading-7 text-ink/75">{resource.description}</p>
+            </a>
+          ))}
         </div>
       </section>
     </div>
