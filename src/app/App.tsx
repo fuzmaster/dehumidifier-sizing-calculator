@@ -229,8 +229,8 @@ export default function App() {
                 <p className="mt-2 text-base leading-7 text-ink/75">Pump and gravity-drain needs can change which units make sense.</p>
               </div>
               <div className="rounded-3xl border border-ink/10 bg-white/80 p-5 shadow-sm backdrop-blur">
-                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Static catalog, no live prices</p>
-                <p className="mt-2 text-base leading-7 text-ink/75">Product matches use manually reviewed catalog rules. Retailer prices may change.</p>
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Static catalog, manually reviewed</p>
+                <p className="mt-2 text-base leading-7 text-ink/75">Product matches use manually reviewed catalog rules. Retailer price may change.</p>
               </div>
             </div>
             <div className="mt-6 rounded-[1.75rem] border border-ink/10 bg-white/85 p-6 shadow-sm backdrop-blur">

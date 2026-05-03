@@ -10,7 +10,7 @@ export function AffiliateDisclosure({ className = '', compact = false }: Affilia
       role="note"
       aria-label="Affiliate disclosure"
     >
-      Affiliate disclosure: This page may earn a commission from retailer links. Product matches are based on static catalog rules, not live prices.
+      Affiliate disclosure: This page may earn a commission from retailer links. Product matches are based on static catalog rules. Retailer price may change.
     </div>
   );
 }

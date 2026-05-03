@@ -94,7 +94,7 @@ export function ResultPanel({ result, title, eyebrow, preview = false }: ResultP
           <section className="rounded-2xl border border-ink/10 bg-white p-5">
             <h3 className="text-lg font-semibold text-ink">Safety note</h3>
             <p className="mt-3 text-base leading-7 text-ink/80">
-              This tool does not diagnose mold, leaks, HVAC problems, foundation issues, or health risks.
+              This tool does not diagnose mold, leaks, HVAC problems, foundation or structural issues, or health risks.
             </p>
           </section>
         </div>

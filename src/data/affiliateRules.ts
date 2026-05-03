@@ -15,7 +15,7 @@ const budgetDescriptors: Record<BudgetRange, string> = {
 };
 
 export const affiliateDisclosureText =
-  'Affiliate disclosure: This page may earn a commission from retailer links. Product matches are based on static catalog rules, not live prices.';
+  'Affiliate disclosure: This page may earn a commission from retailer links. Product matches are based on static catalog rules. Retailer price may change.';
 
 export function buildAffiliateMessage(capacityTier: CapacityTier, inputs: CalculatorInputs): AffiliateMessage {
   let subheadline = budgetDescriptors[inputs.budgetRange];

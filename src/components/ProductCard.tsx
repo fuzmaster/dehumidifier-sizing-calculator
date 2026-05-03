@@ -38,7 +38,7 @@ function getVerificationLabel(verificationStatus: ProductRecord['verificationSta
 
 export function ProductCard({ product, capacityTier, productPosition, rankLabel, onCtaClick }: ProductCardProps) {
   const hasSpecificModel = typeof product.modelNumber === 'string' && product.modelNumber.trim().length > 0;
-  const trustLine = `Last checked: ${formatLastReviewed(product.lastReviewed)} · Retailer price may change`;
+  const trustLine = `Manually reviewed ${formatLastReviewed(product.lastReviewed)} · Retailer price may change`;
   const isPrimaryCard = productPosition === 1;
   const visibleBadges = product.badges.slice(0, 2);
 
