@@ -3,7 +3,10 @@
 Conversion-focused shopping calculator for homeowners replacing older basement dehumidifiers, especially old 70-pint models that no longer map cleanly to modern DOE labels.
 
 - Live app: https://calcmydehumidifier.com/
-- Screenshot: ![Old vs New Dehumidifier Rating Calculator](docs/images/app-screenshot.png)
+
+![Calculator hero](docs/images/app-screenshot.png)
+
+![Results view](docs/images/app-results.png)
 
 ## Project purpose
 
