@@ -2,7 +2,7 @@
 
 Conversion-focused shopping calculator for homeowners replacing older basement dehumidifiers, especially old 70-pint models that no longer map cleanly to modern DOE labels.
 
-- Live app: https://dehumidifier-sizing-calculator.vercel.app/
+- Live app: https://calcmydehumidifier.com/
 - Screenshot: ![Old vs New Dehumidifier Rating Calculator](docs/images/app-screenshot.png)
 
 ## Project purpose
@@ -52,7 +52,7 @@ After adding or changing env vars in Vercel, trigger a new production deployment
 
 ```
 VITE_ANALYTICS_PROVIDER=plausible
-VITE_PLAUSIBLE_DOMAIN=your-domain.vercel.app
+VITE_PLAUSIBLE_DOMAIN=calcmydehumidifier.com
 ```
 
 Add the Plausible script tag to `index.html` manually when using Plausible (it is not injected automatically).
