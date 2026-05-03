@@ -18,6 +18,10 @@ export function Layout({ children }: PropsWithChildren) {
             </div>
             <AffiliateDisclosure compact />
           </div>
+          <div className="mt-8 border-t border-ink/10 pt-6 flex flex-col gap-1 text-xs text-ink/50 md:flex-row md:justify-between">
+            <p>As an Amazon Associate, I earn from qualifying purchases.</p>
+            <p>© jacob britten 2026</p>
+          </div>
         </div>
       </footer>
     </div>
