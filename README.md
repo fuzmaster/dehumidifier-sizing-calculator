@@ -4,6 +4,10 @@ A static Vite + React + TypeScript calculator for homeowners replacing older bas
 
 The app focuses on one specific buying problem: an old 70-pint unit often does not map cleanly to newer labels, so shoppers need a plain-English recommendation for the right modern class before they compare products.
 
+## Screenshot
+
+![Old vs New Dehumidifier Rating Calculator](docs/images/app-screenshot.png)
+
 ## What it does
 
 - Translates basement inputs into a modern dehumidifier size class.
