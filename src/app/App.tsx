@@ -141,8 +141,12 @@ export default function App() {
       return 'Best pump option';
     }
 
+    if (productPosition === 1 && product.verificationStatus === 'exact_model') {
+      return 'Recommended first';
+    }
+
     if (productPosition === 1) {
-      return 'Best first comparison';
+      return 'Top comparison';
     }
 
     if (product.priceTier === 'budget') {
@@ -220,6 +224,15 @@ export default function App() {
                 <p className="mt-2 text-base leading-7 text-ink/75">Product matches use manually reviewed catalog rules. Retailer prices may change.</p>
               </div>
             </div>
+            <div className="mt-6 rounded-[1.75rem] border border-ink/10 bg-white/85 p-6 shadow-sm backdrop-blur">
+              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">What you&apos;ll get</p>
+              <ul className="mt-4 grid gap-3 text-[15px] leading-7 text-ink/80 md:grid-cols-2 md:text-base">
+                <li>Your recommended modern DOE class to compare first</li>
+                <li>Plain-English reasoning for the size match</li>
+                <li>A pump versus gravity-drain note for your setup</li>
+                <li>Three ranked replacement options in normal sizing states</li>
+              </ul>
+            </div>
           </div>
 
           <div className="animate-rise rounded-[2rem] border border-ink/10 bg-white/90 p-7 shadow-soft backdrop-blur md:p-9">
@@ -233,15 +246,6 @@ export default function App() {
               </span>
             </div>
             <CalculatorForm inputs={inputs} onChange={updateField} onSubmit={handleSubmit} />
-            <div className="mt-6 rounded-3xl border border-ink/10 bg-mist p-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">What you&apos;ll get</p>
-              <ul className="mt-3 space-y-2 text-[15px] leading-7 text-ink/80 md:text-base">
-                <li>Your recommended modern DOE class to compare first</li>
-                <li>Plain-English reasoning for the size match</li>
-                <li>A drainage note for pump vs gravity setup</li>
-                <li>Three ranked product comparisons when the scenario is in normal sizing range</li>
-              </ul>
-            </div>
           </div>
         </div>
       </section>
@@ -307,10 +311,9 @@ export default function App() {
                 <div className="flex flex-wrap items-end justify-between gap-4">
                   <div>
                     <p className="text-xs font-semibold uppercase tracking-[0.24em] text-moss">Product comparison</p>
-                    <h2 className="mt-2 font-display text-3xl md:text-4xl">Compare these first</h2>
+                    <h2 className="mt-2 font-display text-3xl md:text-4xl">Start with these 3 replacement options</h2>
                     <p className="mt-2 max-w-2xl text-base leading-7 text-ink/70">
-                      These links are matched to your result using static catalog rules. Retailer price may change, so
-                      confirm today&apos;s listing before buying.
+                      Matched to your replacement result using static catalog rules. Retailer price may change, so confirm today&apos;s listing before buying.
                     </p>
                   </div>
                   <span className="rounded-full bg-white px-4 py-2 text-sm font-semibold text-lake shadow-sm">

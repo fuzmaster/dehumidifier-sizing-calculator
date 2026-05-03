@@ -121,7 +121,7 @@ export function ResultPanel({ result, title, eyebrow, preview = false }: ResultP
         <div className="space-y-5 rounded-3xl bg-mist p-5">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Recommended modern size</p>
-            <p className="mt-2 text-2xl font-semibold text-ink">{result.capacityLabel}</p>
+            <p className="mt-2 text-3xl font-semibold leading-tight text-ink md:text-4xl">{result.capacityLabel}</p>
           </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-lake">Plain-English explanation</p>
@@ -152,6 +152,10 @@ export function ResultPanel({ result, title, eyebrow, preview = false }: ResultP
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">Old-rating translation note</p>
             <p className="mt-2 text-base leading-7 text-ink/80">{result.oldRatingTranslationNote}</p>
+          </div>
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">Source note</p>
+            <p className="mt-2 text-base leading-7 text-ink/80">Based on public DOE and ENERGY STAR rating context. See the source notes and comparison table below.</p>
           </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-moss">Safety note</p>
