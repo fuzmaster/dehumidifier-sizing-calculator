@@ -4,6 +4,8 @@ A static Vite + React + TypeScript calculator for homeowners replacing older bas
 
 The app focuses on one specific buying problem: an old 70-pint unit often does not map cleanly to newer labels, so shoppers need a plain-English recommendation for the right modern class before they compare products.
 
+Live app: https://dehumidifier-sizing-calculator.vercel.app/
+
 ## Screenshot
 
 ![Old vs New Dehumidifier Rating Calculator](docs/images/app-screenshot.png)
@@ -138,6 +140,10 @@ Tracked events:
 ## Deployment
 
 This is a static frontend app and can be deployed to Vercel, Netlify, or any static host.
+
+Current production deployment:
+
+- Live URL: `https://dehumidifier-sizing-calculator.vercel.app/`
 
 - Build command: `npm run build`
 - Output directory: `dist`
