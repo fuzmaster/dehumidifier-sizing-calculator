@@ -1,5 +1,6 @@
 import type { PropsWithChildren } from 'react';
 import { AffiliateDisclosure } from './AffiliateDisclosure';
+import { BacklinkFooter } from './BacklinkFooter';
 
 export function Layout({ children }: PropsWithChildren) {
   return (
@@ -18,12 +19,16 @@ export function Layout({ children }: PropsWithChildren) {
             </div>
             <AffiliateDisclosure compact />
           </div>
-          <div className="mt-8 border-t border-ink/10 pt-6 flex flex-col gap-1 text-xs text-ink/50 md:flex-row md:justify-between">
+          <div className="mt-8 border-t border-ink/10 pt-6 flex flex-col gap-2 text-xs text-ink/50 md:flex-row md:items-center md:justify-between">
             <p>As an Amazon Associate, I earn from qualifying purchases.</p>
-            <p>© jacob britten 2026</p>
+            <div className="flex items-center gap-4">
+              <a href="/privacy.html" className="hover:text-lake">Privacy</a>
+              <p>© jacob britten 2026</p>
+            </div>
           </div>
         </div>
       </footer>
+      <BacklinkFooter />
     </div>
   );
 }

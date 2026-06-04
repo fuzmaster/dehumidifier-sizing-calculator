@@ -3,3 +3,8 @@ node_modules
 dist
 .vscode/*
 !.vscode/extensions.json
+
+# Environment files — configure these in Vercel project settings instead
+.env
+.env.*
+!.env.example

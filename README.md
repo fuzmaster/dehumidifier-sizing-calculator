@@ -1,19 +1,28 @@
-# Old vs New Dehumidifier Rating Calculator
+# Old 70-Pint Dehumidifier Replacement Calculator
 
-Conversion-focused shopping calculator for homeowners replacing older basement dehumidifiers, especially old 70-pint models that no longer map cleanly to modern DOE labels.
+Help homeowners replace older basement dehumidifiers — especially the iconic 70-pint models — with the right modern DOE-rated unit. The legacy pint scale and the post-2019 DOE label don't line up, so a "70-pint" replacement is rarely what people actually need.
 
-- Live app: https://calcmydehumidifier.com/
+**Live app:** https://calcmydehumidifier.com/
 
 ![Calculator hero](docs/images/app-screenshot.png)
 
 ![Results view](docs/images/app-results.png)
 
-## Project purpose
+## What it does
 
-- Target intent: old 70-pint dehumidifier replacement calculator.
-- Explain why legacy pint labels and current DOE labels differ.
-- Produce a clear shopping tier with reasoning, not a black-box output.
-- Show affiliate product comparisons only in safe normal sizing states.
+- Asks for square footage, humidity severity, basement temperature, drainage preference, and budget.
+- Maps the inputs to a modern DOE capacity tier (22 / 35 / 50-pint, or pump-equipped 50-pint).
+- Explains *why* — the old vs new label gap, low-temperature derating, drainage needs.
+- Recommends a small set of manually-curated products with affiliate links, and suppresses recommendations in out-of-bounds or "call a pro" scenarios.
+
+Built by [Jacob Britten](https://jacobbritten.com).
+
+## Tech stack
+
+- React 18 + TypeScript + Vite
+- Tailwind CSS
+- Static catalog (no backend, no scraping)
+- Deployed on Vercel with Web Analytics
 
 ## Local setup
 

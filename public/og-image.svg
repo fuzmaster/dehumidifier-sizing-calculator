@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="bg-tl" cx="0%" cy="0%" r="80%">
+      <stop offset="0%" stop-color="#1e6f8f" stop-opacity="0.22"/>
+      <stop offset="60%" stop-color="#1e6f8f" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bg-tr" cx="80%" cy="20%" r="50%">
+      <stop offset="0%" stop-color="#b66c3a" stop-opacity="0.18"/>
+      <stop offset="60%" stop-color="#b66c3a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#f3ede1"/>
+  <rect width="1200" height="630" fill="url(#bg-tl)"/>
+  <rect width="1200" height="630" fill="url(#bg-tr)"/>
+
+  <g transform="translate(80, 90)">
+    <rect x="0" y="0" rx="28" ry="28" width="280" height="44"
+          fill="#ffffff" fill-opacity="0.7"/>
+    <text x="140" y="29" text-anchor="middle"
+          font-family="Manrope, 'Segoe UI', sans-serif"
+          font-size="14" font-weight="700" letter-spacing="3.4"
+          fill="#5b7c5b">BASEMENT BUYING GUIDE</text>
+  </g>
+
+  <text x="80" y="240"
+        font-family="'DM Serif Display', Georgia, serif"
+        font-size="72" fill="#102a43">Old 70-Pint Dehumidifier</text>
+  <text x="80" y="320"
+        font-family="'DM Serif Display', Georgia, serif"
+        font-size="72" fill="#102a43">Replacement Calculator</text>
+
+  <text x="80" y="400"
+        font-family="Manrope, 'Segoe UI', sans-serif"
+        font-size="26" fill="#102a43" fill-opacity="0.8">
+    Modern DOE labels look smaller than old ones.
+  </text>
+  <text x="80" y="438"
+        font-family="Manrope, 'Segoe UI', sans-serif"
+        font-size="26" fill="#102a43" fill-opacity="0.8">
+    Find the right 22, 35, 50-pint, or pump-equipped class.
+  </text>
+
+  <g transform="translate(80, 510)">
+    <rect x="0" y="0" rx="999" ry="999" width="240" height="64" fill="#1e6f8f"/>
+    <text x="120" y="42" text-anchor="middle"
+          font-family="Manrope, 'Segoe UI', sans-serif"
+          font-size="20" font-weight="700"
+          fill="#ffffff">Try the calculator</text>
+  </g>
+
+  <text x="1120" y="595" text-anchor="end"
+        font-family="Manrope, 'Segoe UI', sans-serif"
+        font-size="18" fill="#102a43" fill-opacity="0.55">
+    calcmydehumidifier.com
+  </text>
+</svg>

@@ -108,7 +108,7 @@ export function ProductCard({ product, capacityTier, productPosition, rankLabel,
           <a
             href={product.affiliateUrl}
             target="_blank"
-            rel="noreferrer sponsored"
+            rel="noopener noreferrer sponsored"
             onClick={() => onCtaClick(product, productPosition, rankLabel)}
             className={`inline-flex w-full items-center justify-center rounded-full px-5 py-4 text-sm font-semibold text-white transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lake ${
               isPrimaryCard ? 'bg-lake hover:bg-ink' : 'bg-ink hover:bg-lake'
